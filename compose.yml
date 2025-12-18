@@ -3,6 +3,8 @@ version: "3.8"
 services:
   devopsdb:
     build: ./Docker-db
+    deploy:
+     replicas: 4
     ports:
       - "3306"
     volumes:
@@ -13,6 +15,8 @@ services:
 
   application:
     build: ./Docker-app
+    deploy:
+     replicas: 4
     ports:
       - "8080"
     volumes:
