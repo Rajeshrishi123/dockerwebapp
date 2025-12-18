@@ -3,12 +3,17 @@ version: "3"
 services:
  devopsdb:
    container_name: devopsdb
-   build : ./Docker-db
+   build : 
+   context: .
+      dockerfile: Docker-db/Dockerfile
+  
    ports:
      - "3306:3306"
 
  application:
-   build : ./Docker-app
+   build : 
+   context: .
+      dockerfile: Docker-app/Dockerfile
    container_name: containerapp
    ports:
      - "1234:8080"
