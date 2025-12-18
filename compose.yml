@@ -9,7 +9,7 @@ services:
    networks :
      - dbnetwork
      - appnetwork
-   ports:
+    ports:
      - "3306"
 
 
