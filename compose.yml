@@ -1,36 +1,33 @@
----
-version: "3"
+version: "3.8"
+
 services:
- devopsdb:
- deploy :
-      replicas: 4
-  volumes :
-     - dbvolume:/docker-entrypoint-initdb.d
-   networks :
-     - dbnetwork
-     - appnetwork
+  devopsdb:
+    build: ./Docker-db
     ports:
-     - "3306"
+      - "3306"
+    volumes:
+      - dbvolume:/docker-entrypoint-initdb.d
+    networks:
+      - dbnetwork
+      - appnetwork
 
+  application:
+    build: ./Docker-app
+    ports:
+      - "8080"
+    volumes:
+      - appvolume:/usr/local/tomcat/logs
+    depends_on:
+      - devopsdb
+    networks:
+      - appnetwork
+      - dbnetwork
 
- application:
-     build : ./Docker-app
-     deploy :
-       replicas : 4
-     volumes :
-     - appvolume:/usr/local/tomcat/logs
-     networks :
-     - appnetwork
-     - dbnetwork
-     ports:
-     - "8080"
-     depends_on:
-     - "devopsdb"
+volumes:
+  dbvolume:
+  appvolume:
 
-volumes :
-    dbvolume:
-    appvolume:
-networks :
+networks:
   appnetwork:
     driver: bridge
   dbnetwork:
