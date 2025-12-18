@@ -2,9 +2,9 @@
 version: "3"
 services:
  devopsdb:
-    deploy :
+ deploy :
       replicas: 4
-   volumes :
+  volumes :
      - dbvolume:/docker-entrypoint-initdb.d
    networks :
      - dbnetwork
@@ -15,16 +15,16 @@ services:
 
  application:
      build : ./Docker-app
-   deploy :
-      replicas : 4
-   volumes :
+     deploy :
+       replicas : 4
+     volumes :
      - appvolume:/usr/local/tomcat/logs
-   networks :
+     networks :
      - appnetwork
      - dbnetwork
-   ports:
+     ports:
      - "8080"
-   depends_on:
+     depends_on:
      - "devopsdb"
 
 volumes :
